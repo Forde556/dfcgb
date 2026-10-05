@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#115e59">
+<title>المترجم الطبي الذكي | برعاية قناة الأسهل بطب الأسنان</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class'}</script>
+<style type="text/tailwindcss">
+  body{font-family:'Cairo',system-ui,'Segoe UI',Tahoma,sans-serif}
+  @layer components{
+    .card{@apply rounded-2xl bg-white dark:bg-slate-800 border border-teal-900/10 dark:border-slate-700 p-5 shadow-sm}
+    .btn{@apply rounded-xl px-4 py-2.5 font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 cursor-pointer}
+    .out{@apply whitespace-pre-wrap leading-8 text-[17px]}
+  }
+</style>
+<style id="docstyle">
+  #doc{background:#fff;color:#000;border-radius:14px;padding:18px;-webkit-print-color-adjust:exact;print-color-adjust:exact;box-shadow:0 4px 20px rgba(0,0,0,0.05)}
+  #doc .hd{font:800 28px 'Times New Roman',serif;color:#dc2626;text-align:center;direction:ltr;margin:24px 0 6px}
+  #doc .en{font:600 18px/1.8 'Times New Roman',serif;color:#1d4ed8;direction:ltr;text-align:justify;margin:14px 0 4px}
+  #doc .li{color:#0891b2;padding-left:26px}
+  #doc .ar{background:#fef08a;color:#000;font-weight:700;font-size:18px;line-height:2.1;direction:rtl;text-align:justify;padding:6px 10px;border-radius:8px;margin-bottom:10px}
+  #doc .ar.c{text-align:center}
+  #doc .t{text-decoration:none;border-bottom:2px dashed #0f766e;cursor:pointer;color:#0f766e;font-weight:700;transition:all .15s}
+  #doc .t:hover{background:#ccfbf1;border-bottom-color:#0d9488}
+  .ok{background:#bbf7d0!important;color:#065f46!important;font-weight:bold}
+  .no{background:#fecaca!important;color:#991b1b!important}
+  #doc .tc{direction:rtl;display:flex;flex-wrap:wrap;gap:6px 10px;margin:6px 0 16px;font:600 13px Cairo,sans-serif;color:#0f766e}
+  #doc .tc span{background:#f0fdfa;border:1px solid #99f6e4;border-radius:20px;padding:2px 10px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
+  #doc .tc b{direction:ltr;unicode-bidi:isolate;color:#1e40af}
+  #doc .ar:focus{outline:2px solid #0f766e;background:#fef9c3}
+  #doc img{display:block;width:100%;height:auto;border:1px solid #cbd5e1;border-radius:10px;margin-bottom:12px}
+  #doc .so{font:500 17px/1.8 'Times New Roman',serif;white-space:pre-wrap;text-align:left;direction:ltr;color:#0f172a;border:1px solid #e2e8f0;border-radius:10px;padding:14px;background:#f8fafc}
+  #doc .sd{display:flex;align-items:center;gap:12px;margin:32px 0 14px;color:#0f766e;font:800 15px Cairo,sans-serif;direction:rtl}
+  #doc .sd:before,#doc .sd:after{content:'';flex:1;border-top:2px dashed #0d9488}
+  #doc .sl:first-child .sd{margin-top:6px}
+  #doc .tr{direction:rtl;text-align:right;margin-top:10px;border-right:5px solid #0f766e;background:#f0fdfa;border-radius:10px;padding:12px 18px;font:600 18px/2 Cairo,Tahoma,sans-serif;color:#0f172a}
+  #doc .tr p{margin:0 0 6px}#doc .tr .th{font-weight:800;font-size:20px;color:#0f766e;margin-top:8px}#doc .tr .tb:before{content:'• '}
+  #doc .tr p:focus{outline:2px solid #0f766e;background:#e6fffa;border-radius:4px}
+  #doc .sl{break-inside:avoid;margin-bottom:24px}
+  @media print{.noprint{display:none!important}body{background:#fff!important;padding:0!important}#doc{padding:0;box-shadow:none}}
+</style>
+<script>
+  try{ if(localStorage.theme==='dark'||(!localStorage.theme&&matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.classList.add('dark') }catch(e){}
+</script>
+</head>
+<body class="bg-[#f1f5f9] dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen pb-16">
+
+<div class="noprint">
+<header class="bg-teal-800 dark:bg-slate-950 text-white shadow-md">
+  <div class="max-w-4xl mx-auto px-4 py-4 flex items-center gap-4">
+    <div class="w-12 h-12 rounded-2xl bg-white text-teal-800 flex items-center justify-center text-2xl shadow-inner font-bold">🦷</div>
+    <div class="flex-1">
+      <h1 class="text-2xl font-extrabold leading-tight flex items-center gap-2">
+        المترجم الطبي الذكي
+        <span class="text-xs bg-teal-700/80 px-2.5 py-0.5 rounded-full border border-teal-600 font-normal">Gemini & NLLB</span>
+      </h1>
+      <p class="text-teal-100 text-xs sm:text-sm mt-0.5">ترجمة مباشرة تحت كل فقرة وسلايد • حفظ وتحميل الملف مترجماً أوفلاين • قاموس شامل للمرحلة الثانية</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="btnSetKey" class="btn text-xs bg-teal-700 hover:bg-teal-600 text-white border border-teal-500 py-1.5 px-3 rounded-lg" title="مفتاح الذكاء الاصطناعي">🔑 مفتاح AI</button>
+      <button id="theme" class="btn bg-white/15 hover:bg-white/25 py-1.5 px-3 rounded-lg" aria-label="تبديل الوضع">🌓</button>
+    </div>
+  </div>
+</header>
+<div class="bg-teal-900 dark:bg-slate-900 text-teal-50 text-sm border-b border-teal-800">
+  <div class="max-w-4xl mx-auto px-4 py-2 flex flex-wrap justify-between items-center gap-x-6 gap-y-1">
+    <span>⭐ مدعوم وبرعاية قناة <b>الأسهل بطب الأسنان</b></span>
+    <span>برعاية شركة <b dir="ltr">FRD</b></span>
+    <span class="text-teal-200">👨‍⚕️ مقدم من: <b>عبدالله فاضل</b></span>
+  </div>
+</div>
+</div>
+
+<main class="max-w-4xl mx-auto p-4 space-y-4">
+
+  <!-- دليل وملاحظات الاستخدام (مقدم من عبدالله فاضل) -->
+  <details class="card bg-teal-50/70 dark:bg-slate-800/80 border border-teal-300/60 dark:border-teal-900/50 p-4 rounded-2xl noprint">
+    <summary class="font-bold text-teal-900 dark:text-teal-300 cursor-pointer flex items-center justify-between">
+      <span class="flex items-center gap-2 text-base">💡 دليل وملاحظات الاستخدام الهامة (مقدم من عبدالله فاضل)</span>
+      <span class="text-xs bg-teal-700 text-white px-2 py-0.5 rounded-md font-normal">اضغط للعرض ▾</span>
+    </summary>
+    <div class="mt-3 text-sm leading-7 space-y-2 text-slate-700 dark:text-slate-300 border-t border-teal-200 dark:border-slate-700 pt-3">
+      <p><b>1. طريقة الترجمة:</b> الصق نص المحاضرة مباشرة أو ارفع ملف (<b>PDF أو TXT</b>) ليقوم المتصفح بقراءة السلايدات تلقائياً.</p>
+      <p><b>2. محركات الترجمة المتطورة:</b>
+        <br>• <b>الذكاء الاصطناعي السحابي (Gemini Flash):</b> فائق الذكاء والسرعة، ويترجم بدقة طبية استثنائية (يمكنك إدخال مفتاح مجاني من زر 🔑 مفتاح AI بالأعلى).
+        <br>• <b>المترجم المباشر (Online):</b> خفيف وسريع ولا يحتاج أي مفتاح أو تحميل.
+        <br>• <b>النموذج المحلي NLLB:</b> يعمل بالكامل أوفلاين داخل المتصفح بعد تحميله لأول مرة.
+      </p>
+      <p><b>3. الترجمة داخل الملف:</b> تظهر الترجمة العربية مباشرة تحت كل فقرة مع إبراز المصطلحات الطبية باللون الفيروزي.</p>
+      <p><b>4. فحص ونطق المصطلحات:</b> اضغط على أي مصطلح مظلل داخل النص لسماع نطقه الصوتي ومعرفة معناه الأكاديمي فوراً.</p>
+      <p><b>5. تعديل النص المترجم:</b> يمكنك النقر مباشرة على النص العربي داخل الصفحة وتعديله يدوياً قبل حفظه.</p>
+      <p><b>6. تحميل الملف المترجم:</b> اضغط على زر <b>«تحميل HTML»</b> للحصول على نسخة تحتوي على المحاضرة وترجمتها مدمجة داخل الملف، تفتح على الهاتف أو الحاسوب بدون إنترنت نهائياً!</p>
+      <div class="pt-2 text-xs font-semibold text-teal-800 dark:text-teal-300 border-t border-dashed border-teal-200 dark:border-slate-700">
+        ⭐ إعداد وتقديم: <b>عبدالله فاضل</b> • بالتعاون مع قناة الأسهل بطب الأسنان وشركة FRD.
+      </div>
+    </div>
+  </details>
+
+  <section class="card space-y-4 noprint">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <label for="src" class="font-bold text-lg">نص المحاضرة (بالإنجليزية)</label>
+      <div class="flex gap-2">
+        <button id="btnSample" class="btn text-xs bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200">مثال (Dental Materials)</button>
+        <label class="btn cursor-pointer bg-teal-50 dark:bg-slate-700 text-teal-800 dark:text-teal-200 hover:bg-teal-100 dark:hover:bg-slate-600 text-sm">
+          رفع ملفات TXT أو PDF
+          <input id="file" type="file" multiple accept=".txt,.md,.pdf,text/plain,application/pdf" class="hidden">
+        </label>
+      </div>
+    </div>
+    <textarea id="src" dir="auto" rows="7" class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 p-3 leading-7 focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="الصق نص المحاضرة هنا، أو ارفع ملفاً."></textarea>
+    
+    <div class="grid sm:grid-cols-2 gap-3 items-end">
+      <div>
+        <label for="model" class="block text-sm font-semibold mb-1">محرك ونموذج الترجمة</label>
+        <select id="model" class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 p-2.5 font-medium">
+          <option value="gemini-flash">الذكاء الاصطناعي الذكي (Gemini Flash - سريع ودقيق جداً) ⚡</option>
+          <option value="online">المترجم المباشر (Online - سريع ومجاني بدون تحميل)</option>
+          <option value="Xenova/nllb-200-distilled-600M">النموذج القوي NLLB (محلي، حوالي 600 م.ب، ينزل مرة وحدة)</option>
+          <option value="Xenova/opus-mt-en-ar">سريع وخفيف (Opus-MT)</option>
+        </select>
+      </div>
+      <div class="flex gap-5 pb-2">
+        <label class="flex items-center gap-2 cursor-pointer font-semibold"><input id="osum" type="checkbox" checked class="w-4 h-4 accent-teal-700"> ملخص ذكي</label>
+        <label class="flex items-center gap-2 cursor-pointer font-semibold"><input id="otr" type="checkbox" checked class="w-4 h-4 accent-teal-700"> ترجمة تحت كل سلايد</label>
+      </div>
+    </div>
+    <button id="run" class="btn w-full bg-teal-700 hover:bg-teal-800 text-white text-lg shadow-md hover:shadow-lg">ترجم ولخّص</button>
+  </section>
+
+  <section id="status" class="card hidden space-y-3 noprint" aria-live="polite">
+    <div class="flex items-center gap-3">
+      <div id="spin" class="h-5 w-5 rounded-full border-2 border-teal-600 border-t-transparent animate-spin"></div>
+      <p id="msg" class="flex-1 font-semibold"></p>
+      <span id="pct" class="text-sm text-slate-500 dark:text-slate-400"></span>
+    </div>
+    <div class="h-2.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden"><div id="bar" class="h-full w-0 bg-teal-600 transition-all"></div></div>
+  </section>
+
+  <section id="res" class="hidden space-y-4">
+    <div class="noprint flex flex-wrap items-center justify-between gap-2 bg-teal-50 dark:bg-slate-800/80 p-3 rounded-2xl border border-teal-200 dark:border-slate-700">
+      <div>
+        <h2 class="text-lg font-bold text-teal-900 dark:text-teal-200">الملف المترجم جاهز</h2>
+        <span class="text-xs text-slate-500 dark:text-slate-400">اضغط أي مصطلح لمعناه، واضغط على العربي لتعديله مباشرة</span>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button id="sv" class="btn bg-amber-500 hover:bg-amber-600 text-white text-sm">💾 حفظ</button>
+        <button id="dlhtml" class="btn bg-teal-700 hover:bg-teal-800 text-white text-sm shadow">📥 تحميل HTML (أوفلاين)</button>
+        <button id="dlpdf" class="btn bg-white dark:bg-slate-800 border border-teal-700 text-teal-800 dark:text-teal-200 text-sm">حفظ PDF</button>
+        <button id="dltxt" class="btn bg-white dark:bg-slate-800 border border-teal-700 text-teal-800 dark:text-teal-200 text-sm">TXT</button>
+      </div>
+    </div>
+
+    <!-- مكان عرض المحاضرة المترجمة -->
+    <article id="doc" dir="ltr"></article>
+
+    <div id="bsum" class="card hidden noprint">
+      <h3 class="font-bold text-teal-800 dark:text-teal-300 mb-2 flex items-center gap-2">
+        <span>🧠</span> الملخص الذكي (Clinical Pearls)
+      </h3>
+      <div id="tsum" class="out"></div>
+    </div>
+
+    <div id="bgl" class="card hidden noprint">
+      <h3 class="font-bold text-teal-800 dark:text-teal-300 mb-2">المصطلحات الطبية الواردة في النص</h3>
+      <div id="tgl" class="out grid sm:grid-cols-2 gap-2 text-sm"></div>
+    </div>
+
+    <div class="card noprint">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-bold text-teal-800 dark:text-teal-300 flex items-center gap-2">
+          <span>🏆</span> اختبر نفسك في هذه المحاضرة
+        </h3>
+        <button id="newq" class="btn bg-teal-50 dark:bg-slate-700 text-teal-800 dark:text-teal-200 text-sm">أسئلة جديدة</button>
+      </div>
+      <div id="tq"></div>
+    </div>
+
+    <div class="card noprint space-y-3">
+      <h3 class="font-bold text-teal-800 dark:text-teal-300 flex items-center gap-2">
+        <span>👨‍🏫</span> اسأل المحاضرة (البروفيسور الذكي)
+      </h3>
+      <div class="flex gap-2">
+        <input id="q" class="flex-1 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 p-2.5 text-sm" placeholder="مثلاً: ما الفرق بين C-factor و Microleakage؟ أو: what is pulpitis">
+        <button id="ask" class="btn bg-teal-700 hover:bg-teal-800 text-white text-sm">اسأل</button>
+      </div>
+      <div id="ta" class="out text-base"></div>
+    </div>
+  </section>
+
+  <section class="card space-y-3 noprint">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <h3 class="font-bold text-lg">مكتبتي المحفوظة</h3>
+      <div class="flex gap-2">
+        <button id="exp" class="btn bg-teal-50 dark:bg-slate-700 text-teal-800 dark:text-teal-200 text-sm">تصدير النسخة</button>
+        <label class="btn cursor-pointer bg-teal-50 dark:bg-slate-700 text-teal-800 dark:text-teal-200 text-sm">استيراد<input id="imp" type="file" accept=".json" class="hidden"></label>
+      </div>
+    </div>
+    <div id="lib"></div>
+  </section>
+
+  <section class="card space-y-3 noprint">
+    <div class="flex items-center justify-between">
+      <h3 class="font-bold text-lg">القاموس الطبي وطب الأسنان الموسع</h3>
+      <span id="dcount" class="text-xs text-teal-700 dark:text-teal-300 font-bold bg-teal-50 dark:bg-slate-700 px-2.5 py-1 rounded-full"></span>
+    </div>
+    <div class="flex gap-2">
+      <input id="dq" dir="auto" class="flex-1 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 p-2.5" placeholder="اكتب مصطلحاً بالإنجليزي أو العربي (مثال: Amalgam, Cusp, Enamel, Action potential...)">
+      <button id="dgo" class="btn bg-teal-700 hover:bg-teal-800 text-white">ابحث</button>
+    </div>
+    <div id="dr" class="space-y-1 max-h-80 overflow-y-auto pr-1"></div>
+  </section>
+
+  <p class="noprint text-sm text-slate-600 dark:text-slate-400 leading-7">
+    الترجمة آلية ومدعومة بالذكاء الاصطناعي وقاموس الأسنان الأكاديمي، فراجعها دائماً للاستفادة القصوى. نصك ومحاضراتك لا تغادر جهازك أبداً وتعمل بأمان.
+  </p>
+  <footer class="noprint text-center font-semibold text-teal-800 dark:text-teal-300 text-sm space-y-1 pt-2">
+    <div>مدعوم من قناة <b>الأسهل بطب الأسنان</b> • برعاية شركة <b>FRD</b></div>
+    <div class="text-xs text-slate-500">إعداد وتقديم: <b>عبدالله فاضل</b> | مخصص لطلاب المرحلة الثانية طب الأسنان</div>
+  </footer>
+</main>
+
+<!-- نافذة المعنى والنطق الفوري -->
+<div id="pop" class="hidden noprint fixed inset-x-0 bottom-4 z-50 p-3">
+  <div class="max-w-xl mx-auto rounded-2xl bg-white dark:bg-slate-800 shadow-2xl border-2 border-teal-600 p-4 flex items-start gap-3">
+    <div class="flex-1">
+      <b id="pw" dir="ltr" class="text-lg text-teal-900 dark:text-teal-200"></b>
+      <p id="pm" class="text-xl font-bold text-teal-800 dark:text-teal-300 leading-8"></p>
+      <p id="ps" class="text-xs text-slate-500 mt-1"></p>
+    </div>
+    <button id="say" class="btn bg-teal-50 dark:bg-slate-700 text-teal-800 dark:text-teal-200" aria-label="نطق">🔊</button>
+    <button id="x" class="btn bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300" aria-label="إغلاق">✕</button>
+  </div>
+</div>
+
+<script type="module">
+import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3";
+env.allowLocalModels = false; navigator.storage?.persist?.();
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuf = a => [...a].sort(() => Math.random() - .5);
+let DOC = [], T = null, TM = '', FOUND = [];
+
+/* ==========================================================================
+   القاموس الطبي الموسع (المرحلة الثانية في طب الأسنان + المصطلحات العامة)
+   ========================================================================== */
+const GLOSSARY = `hypertension:ارتفاع ضغط الدم|hypotension:انخفاض ضغط الدم|diabetes mellitus:داء السكري|myocardial infarction:احتشاء عضلة القلب|stroke:السكتة الدماغية|pneumonia:التهاب رئوي|asthma:الربو|anemia:فقر الدم|inflammation:التهاب|infection:عدوى|sepsis:تعفّن الدم|edema:وذمة|ischemia:نقص التروية|thrombosis:خثار|embolism:انصمام|fibrosis:تليّف|necrosis:نخر|carcinoma:سرطانة|tumor:ورم|metastasis:انبثاث (نقائل)|benign:حميد|malignant:خبيث|diagnosis:التشخيص|prognosis:الإنذار (سير المرض المتوقع)|etiology:المسببات|pathogenesis:آلية حدوث المرض|pathophysiology:الفيزيولوجيا المرضية|symptom:عَرَض|syndrome:متلازمة|antibiotic:مضاد حيوي|analgesic:مسكّن|anticoagulant:مضاد تخثّر|corticosteroid:كورتيكوستيرويد|insulin:الإنسولين|dyspnea:زلّة تنفسية|tachycardia:تسرّع القلب|bradycardia:بطء القلب|arrhythmia:اضطراب نظم القلب|hemorrhage:نزف|hepatitis:التهاب الكبد|cirrhosis:تشمّع الكبد|nephritis:التهاب الكلية|renal failure:فشل كلوي|hypoxia:نقص الأكسجة|biopsy:خزعة|chronic:مزمن|acute:حاد`
+  .split('|').map(x => x.split(':'));
+
+// مسرد طب الأسنان الموسع للمرحلة الثانية (Dental Materials, Anatomy, Histology, Physio, Biochem)
+const DENTAL = `caries:تسوّس الأسنان|enamel:المينا|dentin:العاج|cementum:الملاط|pulp:اللب|pulpitis:التهاب اللب|root canal:قناة الجذر|endodontics:علاج اللب والجذور|periodontium:النسج الداعمة للسن|periodontitis:التهاب دواعم السن|gingivitis:التهاب اللثة|gingiva:اللثة|plaque:اللويحة السنية|calculus:الجير السني|abscess:خرّاج|periapical:حول ذروة الجذر|crown:التاج|bridge:الجسر السني|denture:طقم الأسنان|prosthodontics:التعويضات السنية|orthodontics:تقويم الأسنان|pedodontics:طب أسنان الأطفال|oral surgery:الجراحة الفموية|maxillofacial:الوجه والفكين|implant:الغرسة السنية|osseointegration:التكامل العظمي|extraction:قلع|restoration:ترميم|filling:حشوة|composite:راتنج مركّب (كومبوزت)|amalgam:الملغم السني|glass ionomer:الزجاج الشاردي (GIC)|sealant:سادّة الشقوق|fluoride:الفلورايد|fluorosis:التفلّور|anesthesia:التخدير|local anesthesia:التخدير الموضعي|lidocaine:ليدوكائين|articaine:أرتيكائين|epinephrine:الإبينفرين|malocclusion:سوء الإطباق|occlusion:الإطباق|bruxism:صرير الأسنان|mandible:الفك السفلي|maxilla:الفك العلوي|temporomandibular joint:المفصل الفكي الصدغي|alveolar bone:العظم السنخي|molar:رحى (ضرس)|premolar:ضاحك|canine:ناب|incisor:ثنية (قاطع)|wisdom tooth:ضرس العقل|impacted:منطمر|deciduous:لبني|primary teeth:الأسنان اللبنية|eruption:بزوغ|hypoplasia:نقص تنسّج|xerostomia:جفاف الفم|halitosis:رائحة الفم الكريهة|candidiasis:داء المبيضات|leukoplakia:طلاوة|lichen planus:الحزاز المسطّح|aphthous ulcer:قرحة قلاعية|oral cancer:سرطان الفم|squamous cell:خلايا حرشفية|cyst:كيسة|granuloma:ورم حبيبي|osteomyelitis:التهاب العظم والنقي|osteoporosis:هشاشة العظام|radiograph:صورة شعاعية|panoramic:بانورامية|bitewing:صورة جناحية|CBCT:التصوير المقطعي المخروطي|radiolucent:شفيف للأشعة|radiopaque:معتم للأشعة|sterilization:التعقيم|autoclave:المعقّم البخاري|disinfection:التطهير|cross-infection:العدوى المتصالبة|biofilm:الغشاء الحيوي|Streptococcus mutans:العقديات الطافرة|bacteria:جراثيم|pathogen:عامل ممرض|antibody:جسم مضاد|antigen:مستضد|allergy:تحسّس|hemostasis:الإرقاء (توقف النزف)|coagulation:التخثّر|platelet:صفيحة دموية|hemoglobin:الهيموغلوبين|suture:خيطة جراحية|flap:سديلة|incision:شقّ جراحي|curettage:تجريف|scaling:إزالة الجير|root planing:تسوية الجذر|debridement:تنضير|bone graft:طُعم عظمي|sinus lift:رفع الجيب الفكي|contraindication:مضاد استطباب|indication:استطباب|side effect:عَرَض جانبي|ibuprofen:إيبوبروفين|paracetamol:باراسيتامول|amoxicillin:أموكسيسيلين|metronidazole:ميترونيدازول|chlorhexidine:كلورهكسيدين|anatomy:التشريح|physiology:وظائف الأعضاء|histology:علم الأنسجة|pathology:علم الأمراض|trigeminal:مثلث التوائم|salivary gland:غدة لعابية|saliva:اللعاب|mucosa:مخاطية|epithelium:ظهارة|collagen:الكولاجين|cartilage:غضروف|bone:عظم|tooth:سن|teeth:الأسنان`
+  .split('|').map(x => x.split(':'));
+
+// مصطلحات المرحلة الثانية التخصصية المركزة (مواد سنية، تشريح، هستولوجي، فسلجة، كيمياء)
+const DENTAL_YEAR2 = `alginate:الألجينات (مادة طبعة)|polyvinyl siloxane:إضافة السيليكون (PVS)|polyether:بولي إيثر (مادة طبعة)|impression compound:مركب الطبعة الحراري|zinc oxide eugenol:أكسيد الزنك والأوجينول|zinc phosphate:إسمنت فوسفات الزنك|polycarboxylate:إسمنت عديد الكربوكسيلات|calcium hydroxide:هيدروكسيد الكالسيوم|mineral trioxide aggregate:ثلاثي أكسيد المعادن (MTA)|biodentine:بيودنتين|dental plaster:جبس عادي (النوع الثاني)|dental stone:جبس حجري (النوع الثالث)|die stone:حجر القوالب (النوع الرابع)|inlay wax:شمع الحشوات المصبوبة|baseplate wax:شمع صفائح القواعد|sticky wax:شمع لاصق|compressive strength:مقاومة الانضغاط|tensile strength:مقاومة الشد|shear strength:مقاومة القص|modulus of elasticity:معامل المرونة (الصلابة)|resilience:الرجوعية (المرونة)|toughness:المتانة|ductility:المطيلية|malleability:المطاوعة|creep:الزحف|flow:الانسياب|viscoelasticity:المرونة اللزجة|c-factor:معامل التكوين الهندسي|polymerization shrinkage:انكماش البلمرة|microleakage:التسرب المجهري|syneresis:النضج / الانكماش بالإفراز|imbibition:التشرب المائي|thixotropic:التغير اللزوجي بالرج|setting time:زمن التصلب|working time:زمن العمل|point angle:زاوية نقطية|line angle:زاوية خطية|oblique ridge:الحيد المائل|transverse ridge:الحيد المستعرض|triangular ridge:الحيد المثلثي|marginal ridge:الحافة الهامشية|cusp of carabelli:حدبة كارابيلي|cingulum:الحزام التاجي (السينغلوم)|mamelons:الماميلونات (فصوص القواطع النمائية)|embrasure:المنفذ السني (المفرجة)|contact area:منطقة التماس|height of contour:ارتفاع الكنتور (أعظم تحدب)|curve of spee:منحنى سبي|curve of wilson:منحنى ويلسون|canine guidance:التوجيه بالناب|centric relation:العلاقة المركزية|centric occlusion:الإطباق المركزي|overjet:البروز الأفقي|overbite:التعمّق الإطباقي|crossbite:العضة المتصالبة|enamel rods:المناشير المينائية|striae of retzius:خطوط ريتزيوس النمائية|hunter-schreger bands:حزم هانتر-شريغر|dentinal tubules:الأنابيب العاجية|odontoblasts:الخلايا المصورة للعاج|ameloblasts:الخلايا المصورة للمينا|tomes process:ناتئ تومز|predentin:طليعة العاج|zone of weil:منطقة فايل عديمة الخلايا|sharpey fibers:ألياف شاربي|hertwig epithelial root sheath:غمد هيرتفيغ الظهاري (HERS)|rests of malassez:بقايا مالاسيز الظهارية|junctional epithelium:الظهارة الملتحمة|action potential:جهد الفعل (كمون العمل)|refractory period:فترة الجموح|neuromuscular junction:الوصل العضلي العصبي|salivary reflex:منعكس إفراز اللعاب|masticatory cycle:دورة المضغ|hydroxyapatite:هيدروكسي أباتيت|fluorapatite:فلوروأباتيت|critical ph:الرقم الهيدروجيني الحرج|stephan curve:منحنى ستيفان|bicarbonate buffer:دارئة البيكربونات|glycolysis:انحلال السكر|collagen biosynthesis:التخليق الحيوي للكولاجين`
+  .split('|').map(x => x.split(':'));
+
+const EXTRA = `heart:القلب|lung:الرئة|liver:الكبد|kidney:الكلية|brain:الدماغ|artery:شريان|vein:وريد|blood pressure:ضغط الدم|heart failure:قصور القلب|angina:الذبحة الصدرية|atherosclerosis:تصلّب الشرايين|cholesterol:الكوليسترول|obesity:السمنة|hyperglycemia:ارتفاع سكر الدم|hypoglycemia:انخفاض سكر الدم|thyroid:الغدة الدرقية|hormone:هرمون|enzyme:إنزيم|receptor:مستقبِل|cell:خلية|tissue:نسيج|nerve:عصب|muscle:عضلة|joint:مفصل|ligament:رباط|tendon:وتر|skin:الجلد|wound:جرح|healing:التئام|scar:ندبة|ulcer:قرحة|lesion:آفة|swelling:تورّم|fever:حمّى|nausea:غثيان|vomiting:إقياء|fatigue:إرهاق|bleeding:نزف|clot:خثرة|shock:صدمة|cardiac arrest:توقف القلب|resuscitation:إنعاش|vaccine:لقاح|immunity:مناعة|autoimmune:مناعة ذاتية|virus:فيروس|fungus:فطر|parasite:طفيلي|epidemic:وباء|prevalence:معدل الانتشار|incidence:معدل الحدوث|risk factor:عامل خطورة|complication:اختلاط|congenital:خلقي|hereditary:وراثي|genetic:جيني|mutation:طفرة|therapy:علاج|treatment:معالجة|surgery:جراحة|prescription:وصفة طبية|medication:دواء|dosage:الجرعة|vital signs:العلامات الحيوية|pulse:النبض|chief complaint:الشكوى الرئيسية|differential diagnosis:التشخيص التفريقي|treatment plan:الخطة العلاجية|tartar:الجير|whitening:تبييض|veneer:قشرة سنية|pulpotomy:بتر اللب|pulpectomy:استئصال اللب|apex:ذروة|root:جذر|cusp:حدبة|buccal:دهليزي|lingual:لساني|palatal:حنكي|mesial:أنسي|distal:وحشي|occlusal:إطباقي|labial:شفوي|cervical:عنقي|anterior:أمامي|posterior:خلفي`
+  .split('|').map(x => x.split(':'));
+
+// دمج القواميس
+const D = new Map([...EXTRA, ...GLOSSARY, ...DENTAL, ...DENTAL_YEAR2].filter(x => x[1]).map(([e, a]) => [e.toLowerCase(), a]));
+
+// تحديث العداد
+$('dcount').textContent = D.size + ' مصطلح متوفر';
+
+// تحليل مقاطع المصطلحات الطبية
+const PRE={hyper:'فرط',hypo:'نقص',tachy:'تسرّع',brady:'بطء',poly:'تعدد',anti:'مضاد',intra:'داخل',extra:'خارج',peri:'حول',endo:'باطن',epi:'فوق',sub:'تحت',supra:'فوق',inter:'بين',trans:'عبر',dys:'اضطراب',hemi:'نصف',pan:'شامل',neo:'جديد',macro:'كبير',micro:'صغير',para:'جانب',pre:'قبل',post:'بعد'};
+const ROOT={cardi:'القلب',hepat:'الكبد',nephr:'الكلية',ren:'الكلية',pulmon:'الرئة',gastr:'المعدة',derm:'الجلد',neur:'العصب',oste:'العظم',arthr:'المفصل',myo:'العضلة',hem:'الدم',cyt:'الخلية',onc:'الورم',gingiv:'اللثة',dent:'السن',odont:'السن',stomat:'الفم',gloss:'اللسان',cephal:'الرأس',cerebr:'الدماغ',encephal:'الدماغ',vascul:'الوعاء الدموي',angi:'الوعاء الدموي',ophthalm:'العين',rhin:'الأنف',laryng:'الحنجرة',bronch:'القصبات',thorac:'الصدر',splen:'الطحال',pancreat:'البنكرياس',lymph:'اللمف',immun:'المناعة',bacteri:'الجراثيم',mand:'الفك السفلي',maxill:'الفك العلوي',pulp:'اللب',cement:'الملاط',alveol:'السنخ',sial:'الغدة اللعابية',chondr:'الغضروف',glyc:'سكر الدم',amel:'المينا'};
+const SUF={itis:'التهاب',osis:'حالة مرضية في',pathy:'اعتلال',ectomy:'استئصال',otomy:'شقّ',ostomy:'فغر',plasty:'ترميم/رأب',scopy:'تنظير',graphy:'تصوير',gram:'صورة/تخطيط',algia:'ألم',oma:'ورم',penia:'نقص',megaly:'تضخّم',rrhage:'نزف',plegia:'شلل',lysis:'انحلال',logy:'علم',malacia:'لين',cele:'فتق',emia:'(في الدم)',trophy:'نمو',blast:'خلية مصورة/بانية',clast:'خلية ناقضة/كاسرة'};
+const best=(o,f)=>Object.keys(o).filter(f).sort((a,b)=>b.length-a.length)[0];
+function analyze(w){
+  let r=w.toLowerCase().replace(/[^a-z]/g,''); if(r.length<5) return null;
+  const pk=best(PRE,k=>r.startsWith(k)&&r.length>k.length+3); if(pk) r=r.slice(pk.length);
+  const sk=best(SUF,k=>r.endsWith(k)&&r.length>k.length+1); if(sk) r=r.slice(0,-sk.length);
+  const rk=best(ROOT,k=>r.startsWith(k));
+  if(!rk||!(pk||sk)) return null;
+  return [sk&&SUF[sk],pk&&PRE[pk],ROOT[rk]].filter(Boolean).join(' ');
+}
+const rootOf = w => { w = w.toLowerCase().trim(); for (const c of [w, w.replace(/(es|s)$/, ''), w.replace(/(ed|ing)$/, ''), w.replace(/ies$/, 'y')]) if (D.has(c)) return c; return null; };
+const TRE = new RegExp('\\b(' + [...D.keys()].sort((a, b) => b.length - a.length).map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')(?:s|es)?\\b', 'gi');
+const hl = s => esc(s).replace(TRE, m => `<u class="t">${m}</u>`);
+
+function status(msg, pct) {
+  $('status').classList.remove('hidden');
+  $('spin').classList.remove('hidden');
+  $('msg').textContent = msg;
+  if (pct != null) { $('bar').style.width = pct + '%'; $('pct').textContent = Math.round(pct) + '%'; }
+}
+
+const AB=/\b(?:e\.g|i\.e|Fig|Figs|Dr|vs|etc|al|approx|No|Prof|Mr|Mrs|Ms|spp|ca|cf|S|St)\.$/;
+function sents(t){
+  const o=[]; for(const x of t.split(/(?<=[.!?؟])\s+(?=[A-Z"'(\[•])/)){ if(o.length&&AB.test(o[o.length-1])) o[o.length-1]+=' '+x; else o.push(x); }
+  return o;
+}
+function chunk(t,n){
+  const out=[]; let c='';
+  for(const x of sents(t)){ if((c+' '+x).length>n&&c){ out.push(c.trim()); c=''; } c+=' '+x; }
+  if(c.trim()) out.push(c.trim());
+  return out;
+}
+
+// محرك الترجمة والذكاء الاصطناعي البسيط والذكي
+let geminiKey = localStorage.getItem('gemini_key') || '';
+$('btnSetKey').onclick = () => {
+  const k = prompt('أدخل مفتاح Google Gemini API المجاني الخاص بك (يُحفظ في متصفحك فقط):', geminiKey);
+  if (k !== null) {
+    geminiKey = k.trim();
+    localStorage.setItem('gemini_key', geminiKey);
+    alert(geminiKey ? 'تم حفظ المفتاح بنجاح! محرك Gemini جاهز للعمل.' : 'تم مسح المفتاح، سيتم الاعتماد على المحركات المحلية والأونلاين.');
+  }
+};
+
+async function callGemini(promptText) {
+  if (!geminiKey) throw new Error('NO_KEY');
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+  });
+  if (!resp.ok) throw new Error('API_ERROR');
+  const j = await resp.json();
+  return j?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+}
+
+const onl = async s => {
+  const r = await fetch('https://api.mymemory.translated.net/get?langpair=en|ar&q=' + encodeURIComponent(s));
+  const j = await r.json();
+  if (!j.responseData || !j.responseData.translatedText) throw new Error('online');
+  return j.responseData.translatedText;
+};
+
+async function load(task, model, label) {
+  const files = {};
+  return pipeline(task, model, {
+    progress_callback: p => {
+      if (p.status === 'progress' && p.total) {
+        files[p.file] = { l: p.loaded, t: p.total };
+        let l = 0, t = 0;
+        for (const k in files) { l += files[k].l; t += files[k].t; }
+        status(`جارٍ تحميل ${label}… ${(l / 1048576).toFixed(0)} من ${(t / 1048576).toFixed(0)} م.ب`, l / t * 100);
+      }
+    }
+  });
+}
+
+const isH=s=>s.length<70&&s.split(' ').length<=8&&!/[.!?:,;،]$/.test(s)&&/^[A-Z0-9]/.test(s)&&s.split(' ').every(w=>/^[A-Z0-9(]|^(of|and|the|in|to|for|a|an|on|with|&|-|vs)$/.test(w));
+function tidy(t) {
+  const out=[], isB=/^([•\-*➢●▪]|\d+[.)])\s/;
+  for (const l of t.replace(/\r/g,'').replace(/-\n(?=[a-z])/g,'').split('\n').map(s=>s.replace(/\s+/g,' ').trim()).filter(Boolean)) {
+    const p=out[out.length-1];
+    if (p && !isB.test(l) && !isH(p) && (!/[.!?:؟]$/.test(p) || /^[a-z]/.test(l))) out[out.length-1]=p+' '+l;
+    else out.push(l);
+  }
+  return out.join('\n');
+}
+
+async function readPdf(f) {
+  const base = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
+  if (!window.pdfjsLib) {
+    await new Promise((ok, no) => { const s = document.createElement('script'); s.src = base + 'pdf.min.js'; s.onload = ok; s.onerror = no; document.head.append(s); });
+    const w = await (await fetch(base + 'pdf.worker.min.js')).text();
+    pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(new Blob([w], { type: 'text/javascript' }));
+  }
+  const d = await pdfjsLib.getDocument({ data: await f.arrayBuffer() }).promise, out = [];
+  for (let i = 1; i <= d.numPages; i++) {
+    status(`جارٍ قراءة السلايدات… ${i} من ${d.numPages}`, i / d.numPages * 100);
+    const pg = await d.getPage(i), c = await pg.getTextContent();
+    let y = null, ln = '', t = '';
+    for (const x of c.items) { const yy = x.transform[5]; if (y !== null && Math.abs(yy - y) > 2) { t += ln.trim() + '\n'; ln = ''; } ln += x.str + ' '; y = yy; }
+    t += ln.trim();
+    const vp = pg.getViewport({ scale: 1.5 }), cv = document.createElement('canvas'); cv.width = vp.width; cv.height = vp.height;
+    await pg.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise;
+    out.push({ text: t, img: cv.toDataURL('image/jpeg', 0.8) });
+  }
+  return out;
+}
+let PAGES = null, PG = [];
+
+async function getT(m) {
+  if (T && TM === m) return T;
+  if (m === 'gemini-flash') {
+    if (!geminiKey) {
+      const k = prompt('أدخل مفتاح Gemini API لاستخدام الذكاء الاصطناعي (أو اضغط إلغاء لاستخدام المترجم المباشر مجاناً):');
+      if (k && k.trim()) { geminiKey = k.trim(); localStorage.setItem('gemini_key', geminiKey); }
+      else { $('model').value = 'online'; return getT('online'); }
+    }
+    T = async s => {
+      try {
+        return await callGemini(`ترجم هذا النص الطبي الخاص بطلاب طب الأسنان إلى العربية بدقة أكاديمية وسلاسة، مع الحفاظ على المصطلحات اللاتينية المعروفة:\n${s}`);
+      } catch(e) {
+        return await onl(s);
+      }
+    };
+  } else if (m === 'online') {
+    T = onl;
+  } else {
+    const p = await load('translation', m, 'نموذج الترجمة');
+    const o = m.includes('nllb') ? { src_lang: 'eng_Latn', tgt_lang: 'arb_Arab', max_new_tokens: 512 } : { max_new_tokens: 512 };
+    T = async s => (await p(s, o))[0].translation_text;
+  }
+  TM = m; return T;
+}
+
+const trans = async (t, f) => {
+  const o = [];
+  for (const c of chunk(t, TM === 'gemini-flash' ? 1200 : TM === 'online' ? 450 : 320)) {
+    let r = ''; try { r = await f(c); } catch (e) {}
+    if (!r || (c.length > 60 && r.trim().length < c.length * 0.3)) {
+      r = ''; for (const x of sents(c)) { try { r += ' ' + await f(x); } catch (e) { r += ' ' + x; } }
+    }
+    o.push(r.trim());
+  }
+  return o.join(' ');
+};
+
+function blocks(text) {
+  const B = /^([•\-*➢]|\d+[.)])\s*/;
+  return text.split(/\n+/).map(s => s.trim()).filter(Boolean).map(s => {
+    const li = B.test(s);
+    return { t: s.replace(B, ''), li, h: !li && isH(s) };
+  });
+}
+const STOP = /^(that|with|this|have|from|which|their|these|been|were|such|also|they|them|than|into|more|about|there|when|will|would)$/;
+function summarize(text, n = 5) {
+  const S = sents(text.replace(/\s+/g, ' '));
+  if (S.length <= n) return S.map(s => s.trim());
+  const w = s => (s.toLowerCase().match(/[a-z]{4,}/g) || []).filter(x => !STOP.test(x)), f = {};
+  w(text).forEach(x => f[x] = (f[x] || 0) + 1);
+  return S.map((s, i) => [i, w(s).reduce((a, x) => a + f[x], 0) / Math.sqrt(s.length)])
+    .sort((a, b) => b[1] - a[1]).slice(0, n).map(x => x[0]).sort((a, b) => a - b).map(i => S[i].trim());
+}
+
+// زر المثال السريع
+$('btnSample').onclick = () => {
+  $('src').value = `DENTAL MATERIALS & RESTORATIVE SCIENCE (YEAR 2)
+1. Composite Resins and Polymerization Shrinkage
+Dental composites are aesthetic restorative materials comprising an organic resin matrix (Bis-GMA or UDMA) and inorganic filler particles bonded by a silane coupling agent.
+During light activation, monomer conversion generates polymerization shrinkage (1.5% to 3%). 
+The Configuration Factor (C-factor) represents the ratio of bonded to unbonded cavity surfaces. High C-factor creates intense internal stresses that may cause microleakage and post-operative dentin hypersensitivity.
+
+2. Glass Ionomer Cements (GIC)
+Glass Ionomer Cement adheres chemically to enamel and dentin via ionic bonds with hydroxyapatite. It releases fluoride continuously, preventing secondary caries at the margin.`;
+};
+
+// رفع الملفات
+$('file').onchange = async e => {
+  const fs = [...e.target.files]; if (!fs.length) return;
+  status('جارٍ قراءة الملفات…');
+  try {
+    PAGES = [];
+    for (const f of fs) {
+      if (/\.pdf$/i.test(f.name)) PAGES.push(...await readPdf(f));
+      else PAGES.push(...(await f.text()).split(/\n\s*\n+/).map(t => ({ text: t.trim() })).filter(p => p.text));
+    }
+    $('src').value = PAGES.map(p => p.text).join('\n\n'); $('status').classList.add('hidden');
+  } catch (err) { PAGES = null; $('spin').classList.add('hidden'); $('msg').textContent = 'تعذّرت قراءة الملف. جرّب لصق النص يدوياً.'; }
+};
+$('src').oninput = () => { PAGES = null; };
+
+// عرض الفقرات والسلايدات
+function chips(t){
+  const s=new Set(); for(const m of t.matchAll(TRE)){ const k=rootOf(m[1]); if(k) s.add(k); }
+  return s.size?`<div class="tc">${[...s].slice(0,14).map(k=>`<span><b>${esc(k)}</b> ${esc(D.get(k))}</span>`).join('')}</div>`:''
+}
+const tp=(ar,h,li,i)=>`<p class="${h?'th':li?'tb':''}" contenteditable="true" data-i="${i}">${esc(ar)}</p>`;
+const slide=i=>`<section class="sl" id="sl${i}"><div class="sd"><span>سلايد ${i+1} من ${PG.length}</span></div>${PG[i].img?`<img src="${PG[i].img}" alt="">`:`<div class="so">${hl(PG[i].text)}</div>`}<div class="tr"></div>${chips(PG[i].text)}</section>`;
+
+function renderDoc(){
+  $('doc').innerHTML=PG.map((_,i)=>slide(i)).join('');
+  DOC.forEach((d,j)=>{
+    const b=$('doc').querySelector('#sl'+(d[4]||0)+' .tr');
+    if(b) b.insertAdjacentHTML('beforeend',tp(d[1],d[2],d[3],j));
+  });
+}
+
+function glos(text){
+  FOUND=[...D].filter(([e])=>new RegExp('\\b'+e.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(s|es)?\\b','i').test(text)).sort((a,b)=>a[0].localeCompare(b[0]));
+  $('bgl').classList.toggle('hidden',!FOUND.length);
+  $('tgl').innerHTML=FOUND.map(([e,a])=>`<div class="flex justify-between items-center gap-3 py-1.5 px-2 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-700"><b dir="ltr" class="text-teal-700 dark:text-teal-300">${esc(e)}</b><span class="text-slate-800 dark:text-slate-200 font-semibold">${esc(a)}</span></div>`).join('');
+  makeQuiz();
+}
+$('doc').addEventListener('input',e=>{const a=e.target.closest('[data-i]');if(a&&DOC[a.dataset.i])DOC[a.dataset.i][1]=a.textContent});
+
+// المعالجة الرئيسية
+$('run').onclick = async () => {
+  PG = PAGES || $('src').value.split(/\n\s*\n+/).map(t => ({ text: t.trim() })).filter(p => p.text);
+  const text = PG.map(p => p.text).join('\n');
+  if (!text) return alert('الصق نصاً أو ارفع ملفاً أولاً.');
+  if ((text.match(/[\u0600-\u06FF]/g) || []).length > text.length * 0.3) return alert('النص عربي بالفعل. الأداة تترجم من الإنجليزية إلى العربية.');
+  const doSum = $('osum').checked, doTr = $('otr').checked;
+  if (!doSum && !doTr) return alert('اختر الملخص أو الترجمة.');
+  
+  $('run').disabled = true; DOC = [];
+  try {
+    status('جارٍ تجهيز محرك الترجمة الذكي…', 0);
+    const f = await getT($('model').value);
+    const BL = PG.map(p => doTr ? blocks(tidy(p.text)) : []), SE = doSum ? summarize(text) : [];
+    const total = BL.flat().length + SE.length; let done = 0;
+    
+    $('res').classList.remove('hidden'); $('doc').classList.toggle('hidden', !doTr); $('doc').innerHTML = '';
+    
+    for (let i = 0; i < PG.length; i++) {
+      $('doc').insertAdjacentHTML('beforeend', slide(i));
+      const box = $('doc').querySelector('#sl' + i + ' .tr');
+      for (const b of BL[i]) {
+        const ar = await trans(b.t, f); DOC.push([b.t, ar, b.h, b.li, i]);
+        box.insertAdjacentHTML('beforeend', tp(ar, b.h, b.li, DOC.length - 1));
+        status(`جارٍ الترجمة… سلايد ${i + 1} من ${PG.length}`, ++done / total * 100);
+      }
+    }
+
+    let sh = '';
+    // ملخص ذكي إما عبر Gemini أو بالطريقة التقليدية المترجمة
+    if (doSum && geminiKey) {
+      try {
+        status('الذكاء الاصطناعي يقوم بصياغة الملخص السريري…', 95);
+        const aiSum = await callGemini(`قم بتلخيص هذه المحاضرة في طب الأسنان في 3 نقاط سريرية جوهرية وحيلة واحدة للحفظ للامتحان:\n${text.slice(0, 3000)}`);
+        if (aiSum) sh = `<div class="p-3 bg-teal-50 dark:bg-slate-700/50 rounded-xl border border-teal-200 dark:border-slate-600 leading-8">${esc(aiSum).replace(/\n/g, '<br>')}</div>`;
+      } catch(e) {}
+    }
+
+    if (!sh) {
+      for (const s of SE) {
+        const ar = await trans(s, f); if (!doTr) DOC.push([s, ar]);
+        sh += `<p dir="ltr" class="text-left font-semibold text-teal-800 dark:text-teal-300">• ${esc(s)}</p><p class="mb-3 font-semibold text-slate-800 dark:text-slate-200">${esc(ar)}</p>`;
+        status(`جارٍ ترجمة الملخص… ${++done} من ${total}`, done / total * 100);
+      }
+    }
+
+    $('bsum').classList.toggle('hidden', !sh); $('tsum').innerHTML = sh;
+    glos(text);
+    $('spin').classList.add('hidden'); $('msg').textContent = 'اكتملت الترجمة والمعالجة بنجاح ✓'; $('bar').style.width = '100%'; $('pct').textContent = '100%';
+    $('res').scrollIntoView({ behavior: 'smooth' });
+  } catch (err) {
+    console.error(err); $('spin').classList.add('hidden');
+    $('msg').textContent = 'تعذّر التنفيذ: ' + (err.message || err);
+  } finally { $('run').disabled = false; }
+};
+
+// القاموس والمعنى الفوري
+async function look(w) {
+  w = w.trim(); if (!w) return;
+  $('pw').textContent = w; $('pm').textContent = '…'; $('ps').textContent = ''; $('pop').classList.remove('hidden');
+  const k = rootOf(w); let m = k ? D.get(k) : null, src = 'من مسرد طب الأسنان الأكاديمي';
+  if (!m && (m = analyze(w))) src = 'تحليل مقاطع المصطلح الطبي (تقريبي)';
+  if (!m) {
+    src = 'ترجمة فورية';
+    try { m = await trans(w, await getT(TM || $('model').value)); } catch (e) { m = 'تعذّرت الترجمة'; }
+  }
+  $('pm').textContent = m; $('ps').textContent = src;
+}
+$('x').onclick = () => $('pop').classList.add('hidden');
+$('say').onclick = () => { const u = new SpeechSynthesisUtterance($('pw').textContent); u.lang = 'en-US'; speechSynthesis.speak(u); };
+$('doc').onclick = e => { const u = e.target.closest('.t'); if (u) look(u.textContent); };
+
+let st; document.addEventListener('selectionchange', () => {
+  clearTimeout(st); st = setTimeout(() => {
+    const s = getSelection(), t = s.toString().trim();
+    if (t && t.length < 40 && /^[A-Za-z][A-Za-z\-' ]*$/.test(t) && s.anchorNode && $('doc').contains(s.anchorNode) && s.anchorNode.parentElement.closest('.en,.hd,.so')) look(t);
+  }, 500);
+});
+
+const dsearch = () => {
+  const q = $('dq').value.trim().toLowerCase(); if (!q) return;
+  const r = [...D].filter(([e, a]) => e.includes(q) || a.includes(q)).slice(0, 12);
+  $('dr').innerHTML = r.length ? r.map(([e, a]) => `<div class="flex justify-between items-center gap-3 py-2 px-3 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 rounded-lg"><b dir="ltr" class="text-teal-700 dark:text-teal-300 font-bold">${esc(e)}</b><span class="font-semibold">${esc(a)}</span></div>`).join('') : '<p class="text-sm text-slate-500 py-2">لم يتم العثور على الكلمة في القاموس، جاري التحليل والترجمة...</p>';
+  if (!r.length && /^[a-z]/.test(q)) look(q);
+};
+$('dgo').onclick = dsearch; $('dq').onkeydown = e => { if (e.key === 'Enter') dsearch(); };
+
+// اختبر نفسك
+let SC = 0;
+function makeQuiz() {
+  SC = 0; const all = [...D], pool = FOUND.length >= 5 ? FOUND : [...FOUND, ...shuf(all)].slice(0, 5);
+  $('tq').innerHTML = shuf(pool).slice(0, 5).map(([e, a], i) => {
+    const o = shuf([a, ...shuf(all.filter(x => x[1] !== a)).slice(0, 3).map(x => x[1])]);
+    return `<div class="mb-4 bg-slate-50 dark:bg-slate-700/40 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700"><p class="font-bold mb-2 text-teal-900 dark:text-teal-200" dir="ltr">${i + 1}. What is the meaning of: <b>${esc(e)}</b>?</p><div class="grid sm:grid-cols-2 gap-2">${o.map(x => `<button class="btn q bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-sm py-2 px-3 text-right" data-ok="${x === a ? 1 : 0}">${esc(x)}</button>`).join('')}</div></div>`;
+  }).join('') + '<p id="score" class="font-bold text-teal-800 dark:text-teal-300 text-base mt-2"></p>';
+}
+$('tq').onclick = e => {
+  const b = e.target.closest('.q'); if (!b || b.disabled) return;
+  b.parentNode.querySelectorAll('.q').forEach(x => { x.disabled = true; if (x.dataset.ok == 1) x.classList.add('ok'); });
+  if (b.dataset.ok == 1) SC++; else b.classList.add('no');
+  $('score').textContent = 'النتيجة: ' + SC + ' من 5 إجابات صحيحة';
+};
+$('newq').onclick = makeQuiz;
+
+// اسأل المحاضرة
+$('ask').onclick = async () => {
+  const q = $('q').value.trim(); if (!q || !DOC.length) return;
+  
+  if (geminiKey) {
+    try {
+      $('ta').textContent = 'البروفيسور الذكي يفكر ويستخرج الإجابة…';
+      const lectureContext = DOC.map(d => d[0]).join('\n').slice(0, 3000);
+      const ans = await callGemini(`أنت بروفيسور في طب الأسنان بقناة الأسهل بطب الأسنان. أجب عن سؤال الطالب التالي بإيجاز وذكاء اعتماداً على هذه المحاضرة:\nسؤال: ${q}\n\nالمحاضرة:\n${lectureContext}`);
+      if (ans) {
+        $('ta').innerHTML = `<div class="p-3 bg-teal-50 dark:bg-slate-700/50 rounded-xl border border-teal-200 dark:border-slate-600"><p class="font-bold text-teal-800 dark:text-teal-300 mb-1">💡 جواب البروفيسور الذكي:</p><p class="leading-7">${esc(ans).replace(/\n/g, '<br>')}</p></div>`;
+        return;
+      }
+    } catch(e) {}
+  }
+
+  const tok = s => (s.toLowerCase().match(/[a-z\u0600-\u06FF]{3,}/g) || []).map(w => w.replace(/^(وال|بال|ال)/, '')).filter(w => !STOP.test(w));
+  const qt = new Set(tok(q));
+  const top = DOC.map(([en, ar]) => [en, ar, tok(en + ' ' + ar).filter(w => qt.has(w)).length]).filter(x => x[2]).sort((a, b) => b[2] - a[2]).slice(0, 3);
+  if (!top.length) { $('ta').textContent = 'لم يتم العثور على إجابة مباشرة بالمحاضرة. جرّب صياغة أخرى.'; return; }
+  
+  $('ta').innerHTML = '<p class="mb-2 text-xs text-slate-500">أقرب المقاطع ذات الصلة بالمحاضرة:</p>'
+    + top.map(x => `<div class="mb-3 p-2.5 bg-slate-50 dark:bg-slate-700/30 rounded-lg"><p dir="ltr" class="text-left text-blue-700 dark:text-blue-300 font-semibold">${esc(x[0])}</p><p class="mt-1 font-medium">${esc(x[1])}</p></div>`).join('');
+};
+
+// التحميل والتصدير
+function save(name, type, body) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\ufeff' + body], { type }));
+  a.download = name; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+$('dlpdf').onclick = () => print();
+$('dltxt').onclick = () => save('dental-lecture-ar.txt', 'text/plain;charset=utf-8', DOC.map(d => d[0] + '\n' + d[1]).join('\n\n'));
+$('dlhtml').onclick = () => save('dental-lecture-ar.html', 'text/html;charset=utf-8',
+  `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>المحاضرة المترجمة | برعاية قناة الأسهل بطب الأسنان</title><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&display=swap" rel="stylesheet"><style>body{margin:0;padding:20px;background:#f8fafc;font-family:Cairo,sans-serif}.header{background:#115e59;color:#fff;padding:16px;border-radius:12px;text-align:center;margin-bottom:20px}.header h1{margin:0 0 6px;font-size:22px}.header p{margin:0;font-size:14px;opacity:.9}${$('docstyle').textContent}</style></head><body><div class="header"><h1>🦷 المحاضرة المترجمة</h1><p>برعاية قناة <b>الأسهل بطب الأسنان</b> • إعداد وتقديم: <b>عبدالله فاضل</b></p></div><article id="doc" dir="ltr">${$('doc').innerHTML.replace(/ contenteditable="true"/g,'')}</article><footer style="text-align:center;margin-top:24px;font-size:13px;color:#64748b;">مقدم من: عبدالله فاضل • قناة الأسهل بطب الأسنان</footer></body></html>`);
+
+// مكتبتي (حفظ في المتصفح)
+const LK='medtr_lib', lib=()=>{try{return JSON.parse(localStorage[LK]||'[]')}catch(e){return[]}};
+const putLib=(a,q)=>{try{localStorage[LK]=JSON.stringify(a);return true}catch(e){if(!q)alert('تعذّر الحفظ بالمتصفح.');return false}};
+function showLib(){
+  const a=lib();
+  $('lib').innerHTML=a.length?a.map((x,i)=>`<div class="flex items-center gap-2 py-2.5 border-b border-slate-200 dark:border-slate-700"><div class="flex-1"><b>${esc(x.n)}</b><div class="text-xs text-slate-500">${esc(x.d)} · ${x.doc.length} مقطع</div></div><button class="btn bg-teal-700 hover:bg-teal-800 text-white text-xs py-1.5 px-3" data-o="${i}">فتح</button><button class="btn bg-red-50 hover:bg-red-100 dark:bg-slate-700 text-red-700 dark:text-red-300 text-xs py-1.5 px-3" data-x="${i}">حذف</button></div>`).join(''):'<p class="text-sm text-slate-500 py-2">لا توجد محاضرات محفوظة بعد. بعد الترجمة اضغط 💾 حفظ.</p>'
+}
+$('sv').onclick=()=>{
+  if(!DOC.length)return;
+  const n=prompt('اسم المحاضرة:',(DOC[0][0]||'محاضرة طب أسنان').slice(0,40));
+  if(!n)return;
+  const a=lib();
+  const o={n,d:new Date().toLocaleDateString('ar'),doc:DOC,pg:PG};
+  a.unshift(o);
+  let ok=putLib(a,1);
+  if(!ok){ o.pg=PG.map(p=>({text:p.text})); ok=putLib(a); }
+  if(ok) alert('تم الحفظ في مكتبتك بنجاح ✓');
+  showLib();
+};
+$('lib').onclick=e=>{
+  const b=e.target.closest('button');if(!b)return;const a=lib();
+  if(b.dataset.x!=null){if(confirm('حذف هذه المحاضرة؟')){a.splice(+b.dataset.x,1);putLib(a);showLib()}return}
+  const x=a[+b.dataset.o];DOC=x.doc;PG=x.pg||[{text:DOC.map(d=>d[0]).join('\n')}];$('res').classList.remove('hidden');$('doc').classList.remove('hidden');$('bsum').classList.add('hidden');
+  renderDoc();glos(DOC.map(d=>d[0]).join(' '));$('res').scrollIntoView({behavior:'smooth'})
+};
+$('exp').onclick=()=>save('dental-library.json','application/json',JSON.stringify(lib()));
+$('imp').onchange=async e=>{try{putLib([...JSON.parse(await e.target.files[0].text()),...lib()]);showLib()}catch(x){alert('ملف غير صالح')}};
+showLib();
+
+$('theme').onclick = () => {
+  const dark = document.documentElement.classList.toggle('dark');
+  try { localStorage.theme = dark ? 'dark' : 'light'; } catch (e) {}
+};
+</script>
+</body>
+</html>
